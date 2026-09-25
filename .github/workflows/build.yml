@@ -1,0 +1,47 @@
+name: build-srs
+
+on:
+  schedule:
+    # 每日 18:00 UTC（北京时间 02:00）
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SING_BOX_VERSION: 1.14.1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install sing-box
+        run: |
+          curl -fsSL -o sing-box.tar.gz \
+            "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-amd64.tar.gz"
+          tar -xzf sing-box.tar.gz
+          sudo install -m 0755 "sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box" /usr/local/bin/sing-box
+          sing-box version
+
+      - name: Build rule-sets
+        run: node build.mjs
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add out
+          if git diff --cached --quiet; then
+            echo "no rule-set changes"
+          else
+            git commit -m "chore: rebuild srs $(date -u +%Y-%m-%d)"
+            git push
+          fi

@@ -1,0 +1,13 @@
+{
+  "name": "srs-compiler",
+  "version": "1.0.0",
+  "private": true,
+  "description": "按分类拉取多来源规则文本/现成 srs，合并并编译为 sing-box rule-set (.srs)",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

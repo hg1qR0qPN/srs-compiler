@@ -1,0 +1,49 @@
+{
+  "_comment": "每个分类的 .srs 构建配方。sources 按顺序合并；singGeosite 取自 SagerNet/sing-geosite（解包现成 .srs），blackmatrix7 取自 Clash YAML（转换）。exclude 为从合并结果中剔除的精确域名（用于去掉与分类无关的第三方共用服务）。base 为 jsDelivr 分发端点。",
+  "base": "https://testingcf.jsdelivr.net/gh",
+  "categories": {
+    "bilibili": [
+      { "singGeosite": "bilibili" },
+      { "blackmatrix7": "BiliBili" }
+    ],
+    "openai": [
+      { "singGeosite": "openai" },
+      { "blackmatrix7": "OpenAI" }
+    ],
+    "weibo": [
+      { "singGeosite": "sina" }
+    ],
+    "xiaohongshu": [
+      { "singGeosite": "xiaohongshu" }
+    ],
+    "gemini": [
+      { "singGeosite": "google-gemini" }
+    ],
+    "anthropic": [
+      { "singGeosite": "anthropic" }
+    ]
+  },
+  "exclude": {
+    "openai": [
+      "ai.com",
+      "algolia.net",
+      "api.statsig.com",
+      "auth0.com",
+      "browser-intake-datadoghq.com",
+      "client-api.arkoselabs.com",
+      "events.statsigapi.net",
+      "featuregates.org",
+      "host.livekit.cloud",
+      "identrust.com",
+      "intercom.io",
+      "intercomcdn.com",
+      "launchdarkly.com",
+      "observeit.net",
+      "segment.io",
+      "sentry.io",
+      "static.cloudflareinsights.com",
+      "stripe.com",
+      "turn.livekit.cloud"
+    ]
+  }
+}
